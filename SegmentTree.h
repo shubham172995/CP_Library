@@ -25,7 +25,7 @@ int right(int p){
 	return (p<<1)+1;
 }
 
-void build(int p, int l, int r){
+void buildmin(int p, int l, int r){
 	if(l==r)
 		st[p]=l;
 	else{
@@ -46,6 +46,29 @@ int rmq(int p, int l, int r, int i, int j){
 	if(p1==-1)return p2;
 	if(p2==-1)return p1;
 	return a[p1]<a[p2]?p1:p2;
+}
+
+void buildsum(int p, int l, int r){
+	if(l==r)
+		st[p]=a[l];
+	else{
+		build(left(p), l, (l+r)/2);
+		build(right(p), ((l+r)/2)+1, r);
+		int p1=st[left(p)], p2=st[right(p)];
+		st[p]=p1+p2;
+	}
+}
+
+int rsq(int p, int l, int r, int i, int j){
+	if(i>r||j<l)
+		return -1;
+	if(l>=i&&r<=j)
+		return st[p];
+	int p1=rsq(left(p), l, (l+r)/2, i, j);
+	int p2=rsq(right(p), ((l+r)/2)+1, r, i, j);
+	if(p1==-1)return p2;
+	if(p2==-1)return p1;
+	return p1+p2;
 }
 
 int main(){
