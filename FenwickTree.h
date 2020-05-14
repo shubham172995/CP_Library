@@ -55,6 +55,50 @@ int smallestIndex(int key){
 	return mid;
 }
 
+//Find the minimum frequency from [1, r] from ft.
+int getmin(int r){
+	int ret=INT_MAX;
+	for(; r; r-=LSOne(r)){
+		ret=min(ret, ft[r]);
+	}
+	return ret;
+}
+
+
+struct FenwickTree2D {
+    vector<vector<int>> bit;
+    int n, m;
+    int rsq(int x, int y) {
+        int ret = 0;
+        for (int i = x; i > 0; i- = LSOne(i))
+            for (int j = y; j > 0; j- = LSOne(j))
+                ret += bit[i][j];
+        return ret;
+    }
+
+    void adjust(int x, int y, int delta) {
+        for (int i = x; i < n; i+ =LSOne(i))
+            for (int j = y; j < m; j+ = LSOne(j))
+                bit[i][j] += delta;
+    }
+};
+
+
+void adjust(int l, int r, int x){
+	adjust(l, x);
+	adjust(r+1, -x);
+}
+
+int pointquery(int i){
+	int ret=0;
+	for(; i; i-=LSOne(i)){
+		ret+=ft[i];
+	}
+	return ret;
+}
+
+
+
 int main(){
 	cin>>n;//Indices. This is the number of indices or the range of values.
 	++n;
