@@ -47,6 +47,18 @@ void unionSet(int x, int y){
 	}
 }
 
+/*
+
+Path compression in Find_set.
+
+int find_set(int v) {
+    if (v == parent[v])
+        return v;
+    return parent[v] = find_set(parent[v]);
+}
+
+*/
+
 int numDisjointSets(){
 	int num=0;
 	loop(i, 0, p.size()){
