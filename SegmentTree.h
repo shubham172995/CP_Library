@@ -105,8 +105,8 @@ void updatesum(int p){
 //Updates with deletions and Insertions.
 
 void update(int v, int tl, int tr, int pos, int new_val) {
-    t[v].erase(t[v].find(a[pos]));
-    t[v].insert(new_val);
+    st[v].erase(t[v].find(a[pos]));
+    st[v].insert(new_val);
     if (tl != tr) {
         int tm = (tl + tr) / 2;
         if (pos <= tm)
@@ -124,10 +124,10 @@ void update(int v, int tl, int tr, int pos, int new_val) {
 int get_first(int v, int lv, int rv, int l, int r, int x) {
     if(lv > r || rv < l) return -1;
     if(l <= lv && rv <= r) {
-        if(t[v] <= x) return -1;
+        if(st[v] <= x) return -1;
         while(lv != rv) {
             int mid = lv + (rv-lv)/2;
-            if(t[2*v] > x) {
+            if(st[2*v] > x) {
                 v = 2*v;
                 rv = mid;
             }else {
