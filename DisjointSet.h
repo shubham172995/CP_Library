@@ -12,15 +12,15 @@ typedef vector<ii> vii;
 typedef vector<int> vi;
 typedef pair<ll, ll> llll;
 typedef vector<llll> vll;
-typedef vetor<pair<int, ii> > EdgeList; //Edgelist representation of graphs to store an edge and weights for both directions, i.e., in an undirected graph.x
+typedef vector<pair<int, ii> > EdgeList; //Edgelist representation of graphs to store an edge and weights for both directions, i.e., in an undirected graph.x
 
 
 //								STARTS HERE	
 
-vi p, rank;
+vi p, ranks;
 
-CreateSet(int n){
-	rank.resize(n);
+void CreateSet(int n){
+	ranks.resize(n);
 	p.resize(n);
 	loop(i, 0, n){
 		p[i]=i;
@@ -38,25 +38,22 @@ bool isSameSet(int x, int y){
 void unionSet(int x, int y){
 	if(!isSameSet(x, y)){
 		int px=FindSet(x), py=FindSet(y);	//Path Compression.
-		if(rank[px]>rank[py])
-			p[y]=x;
+		if(ranks[px]>ranks[py])
+			p[py]=px;
 		else{
-			p[x]=y;
-			rank[y]=rank[x]==rank[y]?rank[y]+1:rank[y];
+			p[px]=py;
+			ranks[py]=ranks[px]==ranks[py]?ranks[py]+1:ranks[py];
 		}
 	}
 }
 
 /*
-
 Path compression in Find_set.
-
 int find_set(int v) {
     if (v == parent[v])
         return v;
     return parent[v] = find_set(parent[v]);
 }
-
 */
 
 int numDisjointSets(){
