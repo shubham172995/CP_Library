@@ -29,8 +29,8 @@ void buildmin(int p, int l, int r){
 	if(l==r)
 		st[p]=l;
 	else{
-		build(left(p), l, (l+r)/2);
-		build(right(p), ((l+r)/2)+1, r);
+		buildmin(left(p), l, (l+r)/2);
+		buildmin(right(p), ((l+r)/2)+1, r);
 		int p1=st[left(p)], p2=st[right(p)];
 		st[p]=a[p1]<a[p2]?p1:p2;
 	}
@@ -67,9 +67,11 @@ void buildsum(int p, int l, int r){
 	if(l==r)
 		st[p]=a[l];
 	else{
-		build(left(p), l, (l+r)/2);
-		build(right(p), ((l+r)/2)+1, r);
-		int p1=st[left(p)], p2=st[right(p)];
+		buildsum(left(p), l, (l+r)/2);
+		buildsum(right(p), ((l+r)/2)+1, r);
+		int p1, p2;
+		p1=st[left(p)];
+		p2=st[right(p)];
 		st[p]=p1+p2;
 	}
 }
@@ -105,16 +107,15 @@ void updatesum(int p){
 //Updates with deletions and Insertions.
 
 void update(int v, int tl, int tr, int pos, int new_val) {
-    st[v].erase(t[v].find(a[pos]));
-    st[v].insert(new_val);
     if (tl != tr) {
         int tm = (tl + tr) / 2;
         if (pos <= tm)
             update(v*2, tl, tm, pos, new_val);
         else
             update(v*2+1, tm+1, tr, pos, new_val);
+		st[v]=st[left(v)]+st[right(v)];
     } else {
-        a[pos] = new_val;
+        st[v] = new_val;
     }
 }
 
@@ -143,7 +144,6 @@ int get_first(int v, int lv, int rv, int l, int r, int x) {
     if(rs != -1) return rs;
     return get_first(2*v+1, mid+1, rv, l ,r, x);
 }
-
 
 
 
