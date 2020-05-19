@@ -48,6 +48,20 @@ int rmq(int p, int l, int r, int i, int j){
 	return a[p1]<a[p2]?p1:p2;
 }
 
+void updateminimum(int v, int tl, int tr, int pos, int new_val) {
+    if (tl != tr) {
+        int tm = (tl + tr) / 2;
+        if (pos <= tm)
+            updateminimum(v*2, tl, tm, pos, new_val);
+        else
+            updateminimum(v*2+1, tm+1, tr, pos, new_val);
+		st[v]=st[left(v)]<st[right(v)]?st[left(v)]:st[right(v)];
+    } else {
+        st[v] = new_val;
+    }
+}
+
+
 void updatemin(int p){
 	int p1, p2;
 	if(left(p)<n)
@@ -144,6 +158,7 @@ int get_first(int v, int lv, int rv, int l, int r, int x) {
     if(rs != -1) return rs;
     return get_first(2*v+1, mid+1, rv, l ,r, x);
 }
+
 
 
 
