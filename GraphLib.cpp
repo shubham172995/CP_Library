@@ -41,7 +41,7 @@ void bfs(int s){
     color[s]=1;
     depth[s]=0;
     parent[s]=0;
-    while(!q.size()){
+    while(q.size()){
         int u=q.front();
         q.pop();
         loop(i, 0, ugraph[u].size()){
